@@ -33,90 +33,98 @@
             display: flex; justify-content: center; align-items: center; z-index: 5000;
         }
         .login-box {
-            background: #fff; color: #333; padding: 40px; border-radius: 12px;
+            background: #fff; color: #333; padding: 30px; border-radius: 12px;
             width: 90%; max-width: 350px; text-align: center; border-top: 8px solid var(--accent-red);
         }
-        .login-box input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
+        .login-box input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
         .btn-login { width: 100%; padding: 14px; background: var(--accent-red); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
 
-        /* --- HEADER --- */
+        /* --- HEADER RESPONSIVO --- */
         header {
-            background: var(--header-white); color: #1a1a1a; padding: 10px 30px; 
+            background: var(--header-white); color: #1a1a1a; padding: 10px 20px; 
             display: none; justify-content: space-between; align-items: center; 
             border-bottom: 4px solid var(--accent-red);
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            z-index: 100; flex-wrap: wrap; gap: 15px;
+            z-index: 100;
         }
-        .header-left { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
-        .header-right { display: flex; gap: 20px; align-items: center; }
+        .header-left { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; flex: 1; }
+        .header-right { display: flex; gap: 15px; align-items: center; }
         
         .header-field { display: flex; flex-direction: column; }
         .header-field small { font-size: 9px; color: #666; font-weight: bold; text-transform: uppercase; }
-        .digital-display { background: #000; color: #00ff41; padding: 5px 12px; border-radius: 4px; font-family: monospace; border: 1px solid #30363d; text-align: center; min-width: 70px; }
+        .digital-display { background: #000; color: #00ff41; padding: 5px 10px; border-radius: 4px; font-family: monospace; border: 1px solid #30363d; text-align: center; min-width: 60px; }
 
-        /* BOTÃO RF MASTER */
         .btn-rf-toggle {
-            padding: 8px 18px; border: none; border-radius: 4px; font-weight: bold; 
-            cursor: pointer; font-size: 12px; transition: 0.3s;
-            display: flex; align-items: center; gap: 8px;
+            padding: 8px 12px; border: none; border-radius: 4px; font-weight: bold; 
+            cursor: pointer; font-size: 11px; transition: 0.3s;
         }
-        .rf-on { background: var(--green-active); color: white; box-shadow: 0 0 10px rgba(35, 134, 54, 0.4); }
-        .rf-off { background: var(--accent-red); color: white; box-shadow: 0 0 10px rgba(211, 47, 47, 0.4); }
+        .rf-on { background: var(--green-active); color: white; }
+        .rf-off { background: var(--accent-red); color: white; }
 
-        .system-clock { text-align: right; font-family: 'Courier New', Courier, monospace; line-height: 1.1; }
-        .system-clock b { display: block; font-size: 16px; color: #1a1a1a; }
-        .system-clock span { font-size: 10px; color: #666; font-weight: bold; }
+        .system-clock { text-align: right; line-height: 1.1; display: block; }
+        .system-clock b { display: block; font-size: 14px; color: #1a1a1a; }
+        .system-clock span { font-size: 10px; color: #666; }
 
-        /* --- OPERAÇÃO --- */
-        main { flex: 1; position: relative; display: flex; justify-content: center; align-items: flex-start; padding: 60px 20px; visibility: hidden; }
-        .canvas { position: relative; width: 100%; max-width: 1100px; height: 450px; }
+        /* --- CONTEÚDO PRINCIPAL --- */
+        main { flex: 1; padding: 20px; visibility: hidden; display: flex; justify-content: center; }
+        .canvas { position: relative; width: 100%; max-width: 1000px; min-height: 500px; }
 
+        /* Módulos no Desktop */
         .module {
             position: absolute; background: var(--panel-bg); border: 1px solid #30363d;
-            padding: 18px; width: 150px; text-align: center; border-radius: 10px;
+            padding: 15px; width: 140px; text-align: center; border-radius: 8px;
             cursor: pointer; z-index: 10; transition: 0.3s;
         }
-        .module:hover { border-color: var(--line-on); transform: translateY(-3px); }
-        .module b { display: block; color: var(--accent-red); font-size: 14px; margin-bottom: 5px; }
+        .module:hover { border-color: var(--line-on); transform: scale(1.05); }
+        .module b { display: block; color: var(--accent-red); font-size: 13px; margin-bottom: 4px; }
 
-        /* LINHAS */
         svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        .flow-line { fill: none; stroke: #30363d; stroke-width: 3; transition: 0.5s; }
+        .flow-line { fill: none; stroke: #30363d; stroke-width: 3; }
         .active-flow { stroke: var(--line-on); stroke-dasharray: 8; animation: move 1s linear infinite; }
         @keyframes move { from { stroke-dashoffset: 16; } to { stroke-dashoffset: 0; } }
 
-        /* Posicionamento Módulos */
-        #m1 { top: 120px; left: 20px; }
-        #m2 { top: 120px; left: 240px; }
-        #m3 { top: 120px; left: 460px; }
-        #m4 { top: 120px; left: 680px; }
-        #m5 { top: 300px; left: 445px; width: 180px; }
+        /* Posições Fixas Desktop */
+        #m1 { top: 50px; left: 0; }
+        #m2 { top: 50px; left: 220px; }
+        #m3 { top: 50px; left: 440px; }
+        #m4 { top: 50px; left: 660px; }
+        #m5 { top: 220px; left: 425px; width: 170px; }
+        .antena-out { position: absolute; top: 50px; right: 20px; font-size: 40px; }
 
         /* FOOTER */
         footer {
             background: #0d1117; border-top: 1px solid #30363d;
-            padding: 15px 40px; display: none; justify-content: space-between;
-            align-items: center; color: var(--text-gray); font-size: 11px;
+            padding: 10px 20px; display: none; justify-content: space-between;
+            align-items: center; color: var(--text-gray); font-size: 10px;
         }
 
         /* MODAL */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 6000; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 6000; }
         .modal { 
             display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-            background: #fff; color: #333; width: 90%; max-width: 450px; border-radius: 12px; z-index: 6001; overflow: hidden;
+            background: #fff; color: #333; width: 90%; max-width: 400px; border-radius: 12px; z-index: 6001;
         }
-        .modal-header { background: #1a1a1a; color: #fff; padding: 18px; font-weight: bold; display: flex; justify-content: space-between; }
-        .modal-body { padding: 25px; max-height: 400px; overflow-y: auto; }
-        .config-row { margin-bottom: 15px; display: flex; flex-direction: column; }
-        .config-row label { font-size: 12px; font-weight: bold; color: #555; margin-bottom: 4px; }
-        .config-row input { padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
+        .modal-header { background: #1a1a1a; color: #fff; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; border-radius: 12px 12px 0 0; }
+        .modal-body { padding: 20px; }
+        .config-row { margin-bottom: 12px; display: flex; flex-direction: column; }
+        .config-row input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin-top: 4px; }
 
-        #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--green-active); color: white; padding: 12px 30px; border-radius: 8px; font-weight: bold; display: none; z-index: 7000; }
+        #toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: var(--green-active); color: white; padding: 10px 20px; border-radius: 5px; display: none; z-index: 7000; font-size: 12px; }
 
-        @media (max-width: 1024px) {
-            svg { display: none; }
-            .canvas { height: auto; display: flex; flex-direction: column; align-items: center; gap: 30px; }
-            .module { position: relative !important; top: auto !important; left: auto !important; width: 85%; }
+        /* --- MEDIA QUERIES (RESPONSIVIDADE) --- */
+        @media (max-width: 900px) {
+            header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .header-right { width: 100%; justify-content: space-between; border-top: 1px solid #eee; pt: 10px; }
+            
+            svg { display: none; } /* Esconde linhas no mobile */
+            .canvas { display: flex; flex-direction: column; align-items: center; gap: 15px; min-height: auto; padding-bottom: 50px; }
+            .module { position: relative !important; top: auto !important; left: auto !important; width: 100% !important; max-width: 300px; }
+            .antena-out { position: relative; top: auto; right: auto; margin-top: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .header-left { gap: 10px; justify-content: space-between; }
+            .digital-display { min-width: 50px; font-size: 12px; }
         }
     </style>
 </head>
@@ -125,28 +133,24 @@
     <div id="login-screen">
         <div class="login-box">
             <h2 style="color:var(--accent-red)">SUPERIOR</h2>
-            <p style="font-size: 11px; color: #777; margin-bottom: 20px;">ACESSO AO CONSOLE TÉCNICO</p>
-            <input type="text" id="user" placeholder="Usuário">
-            <input type="password" id="pass" placeholder="Senha">
-            <button class="btn-login" onclick="handleLogin()">EFETUAR LOGIN</button>
+            <input type="text" id="user" placeholder="Usuário (admin)">
+            <input type="password" id="pass" placeholder="Senha (1234)">
+            <button class="btn-login" onclick="handleLogin()">ENTRAR</button>
         </div>
     </div>
 
-    <div id="toast">✓ COMANDO ENVIADO AO HARDWARE</div>
+    <div id="toast">✓ SUCESSO</div>
 
     <header id="app-header">
         <div class="header-left">
             <div class="header-field">
-                <small>Emissão RF</small>
-                <button id="rf-toggle" class="btn-rf-toggle rf-on" onclick="toggleRF()">
-                    RF ON
-                </button>
+                <button id="rf-toggle" class="btn-rf-toggle rf-on" onclick="toggleRF()">RF ON</button>
             </div>
-            <div class="header-field"><small>Modelo</small><b id="h-modelo" style="color:var(--accent-red); font-size: 16px;">SDU 2k PRO</b></div>
-            <div class="header-field"><small>Canal</small><div class="digital-display" id="h-canal" style="color: #fff">24</div></div>
-            <div class="header-field"><small>MER</small><div class="digital-display" style="color: var(--mer-blue)"><span id="val-mer">36.4</span> <small>dB</small></div></div>
-            <div class="header-field"><small>Potência FWD</small><div class="digital-display"><span id="val-fwd">2.01</span> <small>kW</small></div></div>
-            <div class="header-field"><small>Refletida</small><div class="digital-display" style="color:#ffeb3b"><span id="val-ref">15.2</span> <small>W</small></div></div>
+            <div class="header-field"><small>MOD</small><b id="h-modelo" style="color:var(--accent-red)">SDU 2k PRO</b></div>
+            <div class="header-field"><small>CH</small><div class="digital-display" id="h-canal" style="color: #fff">24</div></div>
+            <div class="header-field"><small>MER</small><div class="digital-display" id="display-mer" style="color: var(--mer-blue)"><span id="val-mer">36.4</span></div></div>
+            <div class="header-field"><small>FWD</small><div class="digital-display"><span id="val-fwd">2.01</span></div></div>
+            <div class="header-field"><small>REF</small><div class="digital-display" style="color:#ffeb3b"><span id="val-ref">15.2</span></div></div>
         </div>
         
         <div class="header-right">
@@ -154,35 +158,32 @@
                 <span id="header-date">--/--/----</span>
                 <b id="header-time">00:00:00</b>
             </div>
-            <button onclick="location.reload()" style="background:#f0f0f0; border:1px solid #ccc; padding:8px 12px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:bold;">SAIR</button>
+            <button onclick="location.reload()" style="font-size:10px; padding: 5px 10px; cursor:pointer;">SAIR</button>
         </div>
     </header>
 
     <main id="app-main">
         <div class="canvas">
             <svg id="svg-flow">
-                <path class="flow-line active-flow" d="M 170 155 H 240" />
-                <path class="flow-line active-flow" d="M 390 155 H 460" />
-                <path class="flow-line active-flow" d="M 610 155 H 680" />
-                <path class="flow-line active-flow" d="M 830 155 H 950" />
-                <path class="flow-line active-flow" d="M 535 200 V 300" />
+                <path class="flow-line active-flow" d="M 140 85 H 220" />
+                <path class="flow-line active-flow" d="M 360 85 H 440" />
+                <path class="flow-line active-flow" d="M 580 85 H 660" />
+                <path class="flow-line active-flow" d="M 800 85 H 900" />
+                <path class="flow-line active-flow" d="M 510 120 V 220" />
             </svg>
 
-            <div class="module" id="m1" onclick="openMod('m1')"><b>POWER</b><span>DC Supply</span></div>
-            <div class="module" id="m2" onclick="openMod('m2')"><b>EXCITER</b><span>Modulator</span></div>
-            <div class="module" id="m3" onclick="openMod('m3')"><b>AMPLIFIER</b><span>RF Power</span></div>
-            <div class="module" id="m4" onclick="openMod('m4')"><b>FILTER</b><span>Mask Unit</span></div>
-            <div class="module" id="m5" onclick="openMod('m5')"><b>ANALYZER</b><span>Telemetry</span></div>
+            <div class="module" id="m1" onclick="openMod('m1')"><b>POWER</b><span>Fonte DC</span></div>
+            <div class="module" id="m2" onclick="openMod('m2')"><b>EXCITER</b><span>Excitador</span></div>
+            <div class="module" id="m3" onclick="openMod('m3')"><b>AMPLIFIER</b><span>Amplificador</span></div>
+            <div class="module" id="m4" onclick="openMod('m4')"><b>FILTER</b><span>Filtro</span></div>
+            <div class="module" id="m5" onclick="openMod('m5')"><b>ANALYZER</b><span>Telemetria</span></div>
 
-            <div class="antena-out" style="position: absolute; top: 125px; left: 960px; font-size: 50px;">📡</div>
+            <div class="antena-out">📡</div>
         </div>
     </main>
 
     <footer id="app-footer">
-        <div style="display:flex; align-items:center; gap:10px;">
-            <div id="footer-led" style="width:10px; height:10px; background:var(--green-active); border-radius:50%; box-shadow:0 0 5px var(--green-active)"></div>
-            <span>Superior Tecnologia em Radiodifusão</span>
-        </div>
+        <span>Superior Tecnologia</span>
         <div>SISTEMA OPERACIONAL | 2026</div>
     </footer>
 
@@ -190,11 +191,11 @@
     <div class="modal" id="modal">
         <div class="modal-header">
             <span id="mod-title">Configurações</span>
-            <span onclick="closeMod()" style="cursor:pointer; font-size: 24px;">&times;</span>
+            <span onclick="closeMod()" style="cursor:pointer;">&times;</span>
         </div>
         <div class="modal-body" id="mod-body"></div>
-        <div style="padding: 0 25px 25px;">
-            <button onclick="saveMod()" style="width:100%; padding:15px; background:var(--accent-red); color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">SALVAR ALTERAÇÕES</button>
+        <div style="padding: 0 20px 20px;">
+            <button onclick="saveMod()" style="width:100%; padding:12px; background:var(--accent-red); color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">SALVAR</button>
         </div>
     </div>
 
@@ -204,7 +205,7 @@
             m2: { title: "Excitador Digital", params: { "Modelo": "SDU 2k PRO", "Canal": "24" } },
             m3: { title: "Amplificador RF", params: { "Ganho": "85%", "V_Bias": "2.8 V" } },
             m4: { title: "Filtro de Saída", params: { "Limite ROE": "1.50" } },
-            m5: { title: "Análise de Telemetria", params: { "MER Target": "36.4 dB" } }
+            m5: { title: "Análise de Telemetria", params: { "MER Target": "36.4" } }
         };
 
         let isRFOn = true;
@@ -222,44 +223,35 @@
             isRFOn = !isRFOn;
             const btn = document.getElementById('rf-toggle');
             const paths = document.querySelectorAll('.flow-line');
-            const led = document.getElementById('footer-led');
+            const merDisplay = document.getElementById('display-mer');
 
             if(isRFOn) {
-                btn.className = "btn-rf-toggle rf-on";
-                btn.innerText = "RF ON";
+                btn.className = "btn-rf-toggle rf-on"; btn.innerText = "RF ON";
                 paths.forEach(p => p.classList.add('active-flow'));
-                led.style.background = "var(--green-active)";
-                led.style.boxShadow = "0 0 5px var(--green-active)";
+                merDisplay.style.color = "var(--mer-blue)";
             } else {
-                btn.className = "btn-rf-toggle rf-off";
-                btn.innerText = "RF OFF";
+                btn.className = "btn-rf-toggle rf-off"; btn.innerText = "RF OFF";
                 paths.forEach(p => p.classList.remove('active-flow'));
-                led.style.background = "#555";
-                led.style.boxShadow = "none";
-                // Zera telemetria no display
+                merDisplay.style.color = "#444";
                 document.getElementById('val-fwd').innerText = "0.00";
                 document.getElementById('val-ref').innerText = "0.0";
+                document.getElementById('val-mer').innerText = "0.0";
             }
-            showToast();
         }
 
         function startSystem() {
-            setInterval(updateClock, 1000);
-            updateClock();
-
             setInterval(() => {
-                if(!isRFOn) return;
-                const fwd = (2.01 + (Math.random() * 0.02 - 0.01)).toFixed(2);
-                const ref = (15.1 + (Math.random() * 1.2 - 0.6)).toFixed(1);
-                document.getElementById('val-fwd').innerText = fwd;
-                document.getElementById('val-ref').innerText = ref;
-            }, 1500);
-        }
-
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('header-date').innerText = now.toLocaleDateString('pt-BR');
-            document.getElementById('header-time').innerText = now.toLocaleTimeString('pt-BR');
+                const now = new Date();
+                document.getElementById('header-date').innerText = now.toLocaleDateString('pt-BR');
+                document.getElementById('header-time').innerText = now.toLocaleTimeString('pt-BR');
+                
+                if(isRFOn) {
+                    document.getElementById('val-fwd').innerText = (2.01 + (Math.random() * 0.02 - 0.01)).toFixed(2);
+                    document.getElementById('val-ref').innerText = (15.1 + (Math.random() * 1.2 - 0.6)).toFixed(1);
+                    const baseMer = parseFloat(moduleData.m5.params["MER Target"]);
+                    document.getElementById('val-mer').innerText = (baseMer + (Math.random() * 0.4 - 0.2)).toFixed(1);
+                }
+            }, 1000);
         }
 
         function openMod(id) {
@@ -288,16 +280,11 @@
                 mod.params[key] = input.value;
                 if (key === "Modelo") document.getElementById('h-modelo').innerText = input.value;
                 if (key === "Canal") document.getElementById('h-canal').innerText = input.value;
-                if (key === "MER Target") document.getElementById('val-mer').innerText = parseFloat(input.value).toFixed(1);
+                if (key === "MER Target" && isRFOn) document.getElementById('val-mer').innerText = parseFloat(input.value).toFixed(1);
             });
-            showToast();
-            closeMod();
-        }
-
-        function showToast() {
             const t = document.getElementById('toast');
-            t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 2500);
+            t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 2000);
+            closeMod();
         }
     </script>
 </body>
