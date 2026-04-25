@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Console STB - Enterprise Pro</title>
+    <title>Console Superior - SDU 2k Pro</title>
     <style>
         :root {
             --bg-main: #0a0e14;
@@ -12,6 +12,7 @@
             --green-active: #238636;
             --line-on: #f1c40f;
             --text-gray: #8b949e;
+            --header-white: #ffffff;
         }
 
         body { 
@@ -21,11 +22,11 @@
             margin: 0; 
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* TELA DE LOGIN */
+        /* --- TELA DE LOGIN --- */
         #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
@@ -33,64 +34,105 @@
         }
         .login-box {
             background: #fff; color: #333; padding: 40px; border-radius: 12px;
-            width: 320px; text-align: center; border-top: 8px solid var(--accent-red);
+            width: 90%; max-width: 350px; text-align: center; border-top: 8px solid var(--accent-red);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .login-box h2 { margin: 0 0 20px; color: var(--accent-red); }
+        .login-box h2 { margin: 0 0 10px; color: var(--accent-red); letter-spacing: 2px; }
         .login-box input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        .btn-login { width: 100%; padding: 14px; background: var(--accent-red); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-login { width: 100%; padding: 14px; background: var(--accent-red); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
+        .btn-login:hover { background: #b71c1c; }
 
-        /* HEADER */
+        /* --- HEADER --- */
         header {
-            background: #ffffff; color: #1a1a1a; padding: 10px 30px; 
-            display: flex; justify-content: space-between; align-items: center; 
+            background: var(--header-white); color: #1a1a1a; padding: 12px 30px; 
+            display: none; justify-content: space-between; align-items: center; 
             border-bottom: 4px solid var(--accent-red);
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            z-index: 100;
+            z-index: 100; flex-wrap: wrap; gap: 15px;
         }
         .header-field { display: flex; flex-direction: column; }
-        .header-field small { font-size: 9px; color: #666; font-weight: bold; }
-        
-        .digital-display { background: #000; color: #00ff41; padding: 5px 15px; border-radius: 4px; font-family: monospace; border: 1px solid #30363d; text-align: center; min-width: 80px; }
-        .digital-display span { font-size: 18px; font-weight: bold; }
+        .header-field small { font-size: 9px; color: #666; font-weight: bold; text-transform: uppercase; }
+        .digital-display { background: #000; color: #00ff41; padding: 5px 12px; border-radius: 4px; font-family: monospace; border: 1px solid #30363d; text-align: center; }
 
-        /* DIAGRAMA */
-        main { flex: 1; position: relative; display: flex; justify-content: center; align-items: center; visibility: hidden; }
-        .canvas { position: relative; width: 1100px; height: 500px; }
+        /* --- ÁREA TÉCNICA (CANVAS) --- */
+        main { flex: 1; position: relative; display: flex; justify-content: center; align-items: flex-start; padding: 60px 20px; visibility: hidden; }
+        .canvas { position: relative; width: 100%; max-width: 1100px; height: 500px; }
+
         .module {
             position: absolute; background: var(--panel-bg); border: 1px solid #30363d;
-            padding: 15px; width: 140px; text-align: center; border-radius: 8px;
-            cursor: pointer; z-index: 10; transition: 0.2s;
+            padding: 18px; width: 150px; text-align: center; border-radius: 10px;
+            cursor: pointer; z-index: 10; transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
-        .module:hover { border-color: var(--line-on); background: #1c2128; }
+        .module:hover { border-color: var(--line-on); transform: translateY(-5px); background: #1c2128; }
+        .module b { display: block; color: var(--accent-red); font-size: 14px; margin-bottom: 5px; }
+        .module span { font-size: 11px; color: var(--text-gray); font-weight: 500; }
 
-        svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        /* LINHAS DE FLUXO (Desktop) */
+        svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .flow-line { fill: none; stroke: #30363d; stroke-width: 3; }
         .active-flow { stroke: var(--line-on); stroke-dasharray: 8; animation: move 1s linear infinite; }
         @keyframes move { from { stroke-dashoffset: 16; } to { stroke-dashoffset: 0; } }
 
-        /* FOOTER */
-        footer { background: #0d1117; border-top: 1px solid #30363d; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; color: var(--text-gray); font-size: 12px; }
+        /* Posicionamento Desktop */
+        #m1 { top: 150px; left: 20px; }
+        #m2 { top: 150px; left: 240px; }
+        #m3 { top: 150px; left: 460px; }
+        #m4 { top: 150px; left: 680px; }
+        #m5 { top: 340px; left: 445px; width: 180px; }
+
+        /* --- RESPONSIVIDADE (MOBILE) --- */
+        @media (max-width: 1024px) {
+            header { padding: 15px; justify-content: center; }
+            main { padding-top: 30px; }
+            .canvas { height: auto; display: flex; flex-direction: column; align-items: center; gap: 45px; }
+            .module { position: relative !important; top: auto !important; left: auto !important; width: 85%; max-width: 300px; }
+            svg { display: none; }
+
+            /* Conectores Mobile */
+            .module:not(#m5):not(:last-of-type)::after {
+                content: ""; position: absolute; bottom: -47px; left: 50%;
+                width: 3px; height: 45px; background: var(--line-on);
+                box-shadow: 0 0 10px var(--line-on); z-index: -1;
+            }
+            .module:not(#m5):not(:last-of-type)::before {
+                content: "▼"; position: absolute; bottom: -54px; left: calc(50% - 6px);
+                color: var(--line-on); font-size: 14px;
+            }
+            .antena-out { order: 10; margin-top: 20px; font-size: 70px !important; position: relative !important; left: auto !important; top: auto !important; }
+        }
+
+        /* --- FOOTER PROFISSIONAL --- */
+        footer {
+            background: #0d1117; border-top: 1px solid #30363d;
+            padding: 15px 40px; display: none; justify-content: space-between;
+            align-items: center; color: var(--text-gray); font-size: 11px;
+            letter-spacing: 1px; z-index: 100;
+        }
+        .footer-brand { display: flex; align-items: center; gap: 12px; font-weight: bold; text-transform: uppercase; }
+        .status-led { width: 10px; height: 10px; background: var(--green-active); border-radius: 50%; box-shadow: 0 0 8px var(--green-active); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .system-info { display: flex; gap: 25px; }
+        .system-info span { color: #c9d1d9; }
+
+        @media (max-width: 768px) {
+            footer { flex-direction: column; gap: 15px; text-align: center; padding: 25px; }
+            .system-info { flex-direction: column; gap: 8px; }
+        }
 
         /* MODAL */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 6000; }
         .modal { 
             display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-            background: #fff; color: #333; width: 450px; border-radius: 12px; z-index: 1001; overflow: hidden;
+            background: #fff; color: #333; width: 90%; max-width: 450px; border-radius: 12px; z-index: 6001; overflow: hidden;
         }
-        .modal-header { background: #1a1a1a; color: #fff; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; }
-        .modal-body { padding: 20px; max-height: 400px; overflow-y: auto; }
-        .config-row { margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 8px; }
-        .config-row input { padding: 5px; width: 180px; border: 1px solid #ccc; border-radius: 4px; }
+        .modal-header { background: #1a1a1a; color: #fff; padding: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { padding: 25px; }
+        .config-row { margin-bottom: 15px; display: flex; flex-direction: column; }
+        .config-row label { font-size: 12px; font-weight: bold; color: #555; margin-bottom: 5px; }
+        .config-row input { padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
 
-        #toast { position: fixed; top: 20px; right: 20px; background: var(--green-active); color: white; padding: 12px 25px; border-radius: 6px; font-weight: bold; display: none; z-index: 2000; }
-
-        /* COORDENADAS */
-        #m1 { top: 150px; left: 50px; }
-        #m2 { top: 150px; left: 260px; }
-        #m3 { top: 150px; left: 470px; }
-        #m4 { top: 150px; left: 680px; }
-        #m5 { top: 320px; left: 450px; width: 180px; }
+        #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--green-active); color: white; padding: 12px 30px; border-radius: 8px; font-weight: bold; display: none; z-index: 7000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
     </style>
 </head>
 <body>
@@ -98,82 +140,84 @@
     <div id="login-screen">
         <div class="login-box">
             <h2>SUPERIOR</h2>
-            <p style="font-size: 12px; color: #666;">Acesso Restrito ao Console</p>
-            <input type="text" id="user" placeholder="Usuário (admin)">
-            <input type="password" id="pass" placeholder="Senha (1234)">
-            <button class="btn-login" onclick="handleLogin()">ENTRAR</button>
-            <p id="login-err" style="color:red; font-size:11px; margin-top:10px; display:none;">Usuário ou senha incorretos.</p>
+            <p style="font-size: 12px; color: #777; margin-bottom: 25px;">SISTEMA DE GERENCIAMENTO DE TRANSMISSÃO</p>
+            <input type="text" id="user" placeholder="Usuário">
+            <input type="password" id="pass" placeholder="Senha">
+            <button class="btn-login" onclick="handleLogin()">INICIAR SESSÃO</button>
+            <p id="login-err" style="color:var(--accent-red); font-size:11px; margin-top:15px; display:none; font-weight:bold;">Acesso Negado: Verifique os dados.</p>
         </div>
     </div>
 
-    <div id="toast">✓ Alteração salva no sistema</div>
+    <div id="toast">✓ COMANDO ENVIADO AO HARDWARE</div>
 
-    <header id="app-header" style="display:none;">
-        <div style="display:flex; gap:30px">
-            <div class="header-field"><small>MODELO</small><b style="color:var(--accent-red); font-size: 18px;">SDU 2k</b></div>
-            
-            <div class="header-field">
-                <small>CANAL ATIVO</small>
-                <div class="digital-display" style="color:#00e5ff; min-width: 60px;">
-                    <span id="header-canal">24</span>
-                </div>
-            </div>
-
-            <div class="header-field"><small>FWD (Direta)</small><div class="digital-display"><span id="val-fwd">2.01</span> <small>kW</small></div></div>
-            <div class="header-field"><small>REF (Refletida)</small><div class="digital-display" style="color:#ffeb3b"><span id="val-ref">15.2</span> <small>W</small></div></div>
+    <header id="app-header">
+        <div style="display:flex; gap:20px; flex-wrap: wrap;">
+            <div class="header-field"><small>Equipamento</small><b style="color:var(--accent-red); font-size: 18px;">SDU 2k PRO</b></div>
+            <div class="header-field"><small>Canal RF</small><div class="digital-display" id="header-canal" style="color:#00e5ff">24</div></div>
+            <div class="header-field"><small>Potência FWD</small><div class="digital-display"><span id="val-fwd">2.01</span> <small>kW</small></div></div>
+            <div class="header-field"><small>Refletida</small><div class="digital-display" style="color:#ffeb3b"><span id="val-ref">15.2</span> <small>W</small></div></div>
         </div>
-        <div style="display:flex; gap:15px; align-items:center;">
-            <div class="header-field" style="margin-right:15px;"><small>HORA LOCAL</small><b id="clock" style="font-family:monospace">00:00:00</b></div>
-            <div class="digital-display"><small>MER</small><br><span id="val-mer">36.4</span> <small>dB</small></div>
-            <button onclick="handleLogout()" style="background:#2c3e50; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:bold">SAIR</button>
+        <div style="display:flex; align-items:center; gap:20px">
+            <div class="header-field" style="text-align: right;"><small>Data/Hora</small><b id="clock" style="font-family:monospace; color: #444;">00:00:00</b></div>
+            <button onclick="location.reload()" style="background:#333; color:white; border:none; padding:10px 15px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:bold;">LOGOUT</button>
         </div>
     </header>
 
     <main id="app-main">
         <div class="canvas">
             <svg>
-                <path class="flow-line active-flow" d="M 190 190 H 260" />
-                <path class="flow-line active-flow" d="M 400 190 H 470" />
-                <path class="flow-line active-flow" d="M 610 190 H 680" />
-                <path class="flow-line active-flow" d="M 820 190 H 950" />
-                <path class="flow-line active-flow" d="M 540 230 V 320" />
+                <path class="flow-line active-flow" d="M 170 185 H 240" />
+                <path class="flow-line active-flow" d="M 390 185 H 460" />
+                <path class="flow-line active-flow" d="M 610 185 H 680" />
+                <path class="flow-line active-flow" d="M 830 185 H 950" />
+                <path class="flow-line active-flow" d="M 535 230 V 340" />
             </svg>
-            <div class="module" id="m1" onclick="openMod('m1')"><b>POWER/</b><span>Fonte AC/DC</span></div>
-            <div class="module" id="m2" onclick="openMod('m2')"><b>EXCITER/</b><span>Modulador ISDB-T</span></div>
-            <div class="module" id="m3" onclick="openMod('m3')"><b>AMPLIFIER/</b><span>Potência RF</span></div>
-            <div class="module" id="m4" onclick="openMod('m4')"><b>FILTER/</b><span>Mask Unit</span></div>
-            <div class="module" id="m5" onclick="openMod('m5')"><b>ANALYZER/</b><span>Telemetria</span></div>
-            <div style="position: absolute; top: 160px; left: 960px; font-size: 40px;">📡</div>
+
+            <div class="module" id="m1" onclick="openMod('m1')"><b>POWER</b><span>Main DC Supply</span></div>
+            <div class="module" id="m2" onclick="openMod('m2')"><b>EXCITER</b><span>ISDB-Tb Modulator</span></div>
+            <div class="module" id="m3" onclick="openMod('m3')"><b>AMPLIFIER</b><span>High Power RF</span></div>
+            <div class="module" id="m4" onclick="openMod('m4')"><b>FILTER</b><span>Mask Filter Unit</span></div>
+            <div class="module" id="m5" onclick="openMod('m5')"><b>ANALYZER</b><span>Advanced Telemetry</span></div>
+
+            <div class="antena-out" style="position: absolute; top: 155px; left: 960px; font-size: 50px;">📡</div>
         </div>
     </main>
+
+    <footer id="app-footer">
+        <div class="footer-brand">
+            <div class="status-led"></div>
+            <span>Superior Tecnologia em Radiodifusão</span>
+        </div>
+        
+        <div class="system-info">
+            <div>FIRMWARE: <span id="fw-ver">v4.2.8-BETA</span></div>
+            <div>© 2026 | CONSOLE NACIONAL</div>
+        </div>
+    </footer>
 
     <div class="modal-overlay" onclick="closeMod()"></div>
     <div class="modal" id="modal">
         <div class="modal-header">
-            <span id="mod-title">Configurações</span>
-            <span onclick="closeMod()" style="cursor:pointer">×</span>
+            <span id="mod-title">Parâmetros do Módulo</span>
+            <span onclick="closeMod()" style="cursor:pointer; font-size: 24px;">&times;</span>
         </div>
         <div class="modal-body" id="mod-body"></div>
-        <div style="padding: 20px; background: #f9f9f9;">
-            <button onclick="saveMod()" style="width:100%; padding:12px; background:var(--accent-red); color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">SALVAR ALTERAÇÕES</button>
+        <div style="padding: 0 25px 25px;">
+            <button onclick="saveMod()" style="width:100%; padding:15px; background:var(--accent-red); color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">ATUALIZAR HARDWARE</button>
         </div>
     </div>
 
-    <footer id="app-footer" style="display:none;">
-        <div class="footer-logo"><span style="color:var(--accent-red)">●</span> SUPERIOR TECNOLOGIA EM RADIODIFUSÃO</div>
-        <div>Firmware: v4.2.8 | © 2026</div>
-    </footer>
-
     <script>
         const moduleData = {
-            m1: { title: "Fonte de Alimentação AC/DC", params: { "Tensão Nominal": "48.5 V", "Corrente Máx": "210 A", "Proteção OVP": "56 V" } },
-            m2: { title: "Modulador Digital", params: { "Canal": "24", "Frequência": "533.14 MHz", "Offset": "0 Hz", "Atenuador": "10 dB" } },
-            m3: { title: "Amplificador de RF", params: { "Ganho ALC": "85%", "Bias": "2.8 V", "Temperatura Limite": "75 °C" } },
-            m4: { title: "Filtro de Saída", params: { "Limite ROE": "1.50", "Rejeição": "-60 dB" } },
-            m5: { title: "Analisador de Telemetria", params: { "IP Servidor": "192.168.1.100", "Intervalo Log": "5s", "MER Alarme": "32 dB" } }
+            m1: { title: "Sistema de Energia AC/DC", params: { "Voltagem Saída": "48.5 V", "Corrente Nominal": "210 A", "Status": "Normal" } },
+            m2: { title: "Excitador Digital", params: { "Canal": "24", "Offset": "0 Hz", "Atenuação": "12 dB" } },
+            m3: { title: "Estágio Amplificador", params: { "Ganho ALC": "88%", "Temp. Dissipador": "44.2 °C", "Bias": "2.8 V" } },
+            m4: { title: "Unidade de Filtro/Máscara", params: { "ROE Máxima": "1.50", "Rejeição Adjacente": "-62 dB" } },
+            m5: { title: "Análise de Telemetria", params: { "MER": "36.4 dB", "IP Address": "192.168.1.100", "Modo": "SNMP v3" } }
         };
 
         let currentModId = null;
+        let uptimeSeconds = 0;
 
         function handleLogin() {
             const u = document.getElementById('user').value;
@@ -183,21 +227,29 @@
                 document.getElementById('app-header').style.display = 'flex';
                 document.getElementById('app-main').style.visibility = 'visible';
                 document.getElementById('app-footer').style.display = 'flex';
-                startTelemetry();
+                startSystem();
             } else {
                 document.getElementById('login-err').style.display = 'block';
             }
         }
 
-        function handleLogout() { location.reload(); }
-
-        function startTelemetry() {
+        function startSystem() {
             setInterval(() => {
-                document.getElementById('clock').innerText = new Date().toLocaleTimeString();
-                // Ajustado para simular 2kW
-                document.getElementById('val-fwd').innerText = (2.01 + Math.random() * 0.02).toFixed(2);
-                document.getElementById('val-ref').innerText = (15.1 + Math.random() * 1.2).toFixed(1);
-                document.getElementById('val-mer').innerText = (36.2 + Math.random() * 0.4).toFixed(1);
+                // Relógio em tempo real
+                document.getElementById('clock').innerText = new Date().toLocaleTimeString('pt-BR');
+                
+                // Telemetria Dinâmica (Simulação)
+                const fwd = (2000.1 + (Math.random() * 0.02 - 0.01)).toFixed(2);
+                const ref = (15.1 + (Math.random() * 1.5 - 0.7)).toFixed(1);
+                
+                document.getElementById('val-fwd').innerText = fwd;
+                document.getElementById('val-ref').innerText = ref;
+
+                // Contador de Uptime
+                uptimeSeconds++;
+                let h = Math.floor(uptimeSeconds / 3600);
+                let m = Math.floor((uptimeSeconds % 3600) / 60);
+                document.getElementById('uptime').innerText = `00d ${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m`;
             }, 1000);
         }
 
@@ -207,10 +259,11 @@
             document.getElementById('mod-title').innerText = mod.title;
             let html = '';
             for (let param in mod.params) {
-                html += `<div class="config-row">
-                            <label>${param}:</label>
-                            <input type="text" value="${mod.params[param]}" id="input-${param}">
-                         </div>`;
+                html += `
+                    <div class="config-row">
+                        <label>${param}</label>
+                        <input type="text" value="${mod.params[param]}" id="input-${param}">
+                    </div>`;
             }
             document.getElementById('mod-body').innerHTML = html;
             document.getElementById('modal').style.display = 'block';
@@ -225,15 +278,13 @@
         function saveMod() {
             const mod = moduleData[currentModId];
             for (let param in mod.params) {
-                const newValue = document.getElementById(`input-${param}`).value;
-                mod.params[param] = newValue;
-                if (currentModId === 'm2' && param === 'Canal') {
-                    document.getElementById('header-canal').innerText = newValue;
-                }
+                const val = document.getElementById(`input-${param}`).value;
+                mod.params[param] = val;
+                if(param === 'Canal') document.getElementById('header-canal').innerText = val;
             }
             const t = document.getElementById('toast');
             t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 2500);
+            setTimeout(() => t.style.display = 'none', 3000);
             closeMod();
         }
     </script>
