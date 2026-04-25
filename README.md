@@ -1,4 +1,4 @@
-# 📡 Console Linear Denki - Operação Pro
+# 📡 Console STB - Operação Pro
 
 ![Status](https://img.shields.io/badge/Status-Desenvolvimento-blue)
 ![Tech](https://img.shields.io/badge/Tecnologias-HTML5%20%7C%20CSS3%20%7C%20JS-orange)
@@ -29,4 +29,4 @@ Interface técnica de monitoramento para transmissores digitais de TV (padrão I
 
 1. Faça o download ou clone este repositório:
    ```bash
-   git clone [https://github.com/seu-usuario/console-linear-denki.git](https://github.com/seu-usuario/console-linear-denki.git)
+   git clone [https://github.com/seu-usuario/console-stb.git](https://github.com/seu-usuario/console-stb.git)
