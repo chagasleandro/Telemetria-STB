@@ -29,4 +29,5 @@ Interface técnica de monitoramento para transmissores digitais de TV (padrão I
 
 1. Faça o download ou clone este repositório:
    ```bash
-   git clone [https://github.com/seu-usuario/console-stb.git](https://github.com/seu-usuario/console-stb.git)
+   git clone [https://github.com/chagasleandro/Telemetria-STB.git] (https://github.com/chagasleandro/Telemetria-STB.git)
+   
