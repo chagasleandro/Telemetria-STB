@@ -52,7 +52,7 @@
         
         .header-field { display: flex; flex-direction: column; }
         .header-field small { font-size: 9px; color: #666; font-weight: bold; text-transform: uppercase; }
-        .digital-display { background: #000; color: #00ff41; padding: 5px 12px; border-radius: 4px; font-family: monospace; border: 1px solid #30363d; text-align: center; min-width: 70px; transition: color 0.3s; }
+        .digital-display { background: #000; color: #00ff41; padding: 5px 12px; border-radius: 4px; font-family: monospace; border: 1px solid #30363d; text-align: center; min-width: 70px; }
 
         /* BOTÃO RF MASTER */
         .btn-rf-toggle {
@@ -112,6 +112,12 @@
         .config-row input { padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
 
         #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--green-active); color: white; padding: 12px 30px; border-radius: 8px; font-weight: bold; display: none; z-index: 7000; }
+
+        @media (max-width: 1024px) {
+            svg { display: none; }
+            .canvas { height: auto; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+            .module { position: relative !important; top: auto !important; left: auto !important; width: 85%; }
+        }
     </style>
 </head>
 <body>
@@ -126,7 +132,7 @@
         </div>
     </div>
 
-    <div id="toast">✓ COMANDO PROCESSADO</div>
+    <div id="toast">✓ COMANDO ENVIADO AO HARDWARE</div>
 
     <header id="app-header">
         <div class="header-left">
@@ -138,7 +144,7 @@
             </div>
             <div class="header-field"><small>Modelo</small><b id="h-modelo" style="color:var(--accent-red); font-size: 16px;">SDU 2k PRO</b></div>
             <div class="header-field"><small>Canal</small><div class="digital-display" id="h-canal" style="color: #fff">24</div></div>
-            <div class="header-field"><small>MER</small><div class="digital-display" id="display-mer" style="color: var(--mer-blue)"><span id="val-mer">36.4</span> <small>dB</small></div></div>
+            <div class="header-field"><small>MER</small><div class="digital-display" style="color: var(--mer-blue)"><span id="val-mer">36.4</span> <small>dB</small></div></div>
             <div class="header-field"><small>Potência FWD</small><div class="digital-display"><span id="val-fwd">2.01</span> <small>kW</small></div></div>
             <div class="header-field"><small>Refletida</small><div class="digital-display" style="color:#ffeb3b"><span id="val-ref">15.2</span> <small>W</small></div></div>
         </div>
@@ -217,7 +223,6 @@
             const btn = document.getElementById('rf-toggle');
             const paths = document.querySelectorAll('.flow-line');
             const led = document.getElementById('footer-led');
-            const merDisplay = document.getElementById('display-mer');
 
             if(isRFOn) {
                 btn.className = "btn-rf-toggle rf-on";
@@ -225,18 +230,15 @@
                 paths.forEach(p => p.classList.add('active-flow'));
                 led.style.background = "var(--green-active)";
                 led.style.boxShadow = "0 0 5px var(--green-active)";
-                merDisplay.style.color = "var(--mer-blue)";
             } else {
                 btn.className = "btn-rf-toggle rf-off";
                 btn.innerText = "RF OFF";
                 paths.forEach(p => p.classList.remove('active-flow'));
                 led.style.background = "#555";
                 led.style.boxShadow = "none";
-                merDisplay.style.color = "#444";
-                // Zera tudo no display
+                // Zera telemetria no display
                 document.getElementById('val-fwd').innerText = "0.00";
                 document.getElementById('val-ref').innerText = "0.0";
-                document.getElementById('val-mer').innerText = "0.0";
             }
             showToast();
         }
@@ -245,23 +247,13 @@
             setInterval(updateClock, 1000);
             updateClock();
 
-            // Loop de Telemetria Real-Time
             setInterval(() => {
                 if(!isRFOn) return;
-
-                // FWD Oscilação
                 const fwd = (2.01 + (Math.random() * 0.02 - 0.01)).toFixed(2);
-                document.getElementById('val-fwd').innerText = fwd;
-
-                // REF Oscilação
                 const ref = (15.1 + (Math.random() * 1.2 - 0.6)).toFixed(1);
+                document.getElementById('val-fwd').innerText = fwd;
                 document.getElementById('val-ref').innerText = ref;
-
-                // MER Oscilação (Simula estabilidade do excitador)
-                const baseMer = parseFloat(moduleData.m5.params["MER Target"]);
-                const currentMer = (baseMer + (Math.random() * 0.4 - 0.2)).toFixed(1);
-                document.getElementById('val-mer').innerText = currentMer;
-            }, 1000);
+            }, 1500);
         }
 
         function updateClock() {
@@ -296,7 +288,7 @@
                 mod.params[key] = input.value;
                 if (key === "Modelo") document.getElementById('h-modelo').innerText = input.value;
                 if (key === "Canal") document.getElementById('h-canal').innerText = input.value;
-                if (key === "MER Target" && isRFOn) document.getElementById('val-mer').innerText = parseFloat(input.value).toFixed(1);
+                if (key === "MER Target") document.getElementById('val-mer').innerText = parseFloat(input.value).toFixed(1);
             });
             showToast();
             closeMod();
