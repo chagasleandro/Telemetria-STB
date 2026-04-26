@@ -246,7 +246,7 @@
                 document.getElementById('header-time').innerText = now.toLocaleTimeString('pt-BR');
                 
                 if(isRFOn) {
-                    document.getElementById('val-fwd').innerText = (2.01 + (Math.random() * 0.02 - 0.01)).toFixed(2);
+                    document.getElementById('val-fwd').innerText = (2000.1 + (Math.random() * 0.02 - 0.01)).toFixed(2);
                     document.getElementById('val-ref').innerText = (15.1 + (Math.random() * 1.2 - 0.6)).toFixed(1);
                     const baseMer = parseFloat(moduleData.m5.params["MER Target"]);
                     document.getElementById('val-mer').innerText = (baseMer + (Math.random() * 0.4 - 0.2)).toFixed(1);
